@@ -1,0 +1,6 @@
+{
+  "name": "ClauseClear",
+  "description": "AI Legal & Contract Analyzer — upload contracts, get instant risk analysis with color-coded highlights, and chat directly with your document.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

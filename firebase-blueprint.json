@@ -1,0 +1,94 @@
+{
+  "entities": {
+    "UserProfile": {
+      "title": "UserProfile",
+      "description": "User profile details",
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string",
+          "description": "User's verified email address"
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "ISO timestamp of account creation"
+        }
+      },
+      "required": ["email"]
+    },
+    "LegalDocument": {
+      "title": "LegalDocument",
+      "description": "Analyzed legal contract with extracted text and AI clause findings",
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string",
+          "description": "Owner user ID"
+        },
+        "title": {
+          "type": "string",
+          "description": "Display title of the contract",
+          "maxLength": 255
+        },
+        "fileName": {
+          "type": "string",
+          "description": "Original file name",
+          "maxLength": 255
+        },
+        "fileSize": {
+          "type": "number",
+          "description": "File size in bytes"
+        },
+        "uploadedAt": {
+          "type": "string",
+          "description": "ISO timestamp of upload"
+        },
+        "extractedText": {
+          "type": "string",
+          "description": "Full extracted textual content from contract"
+        },
+        "analysis": {
+          "type": "object",
+          "description": "AI analysis results containing risk score, summary, and key findings"
+        }
+      },
+      "required": ["userId", "title", "extractedText", "uploadedAt"]
+    },
+    "ChatMessage": {
+      "title": "ChatMessage",
+      "description": "Grounded chat thread message related to a specific legal contract",
+      "type": "object",
+      "properties": {
+        "role": {
+          "type": "string",
+          "description": "Sender role: user or model",
+          "enum": ["user", "model"]
+        },
+        "content": {
+          "type": "string",
+          "description": "Message textual content",
+          "maxLength": 10000
+        },
+        "timestamp": {
+          "type": "string",
+          "description": "ISO timestamp of the message"
+        }
+      },
+      "required": ["role", "content", "timestamp"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "UserProfile",
+      "description": "Stores user settings and profile metadata"
+    },
+    "/users/{userId}/documents/{docId}": {
+      "schema": "LegalDocument",
+      "description": "User's analyzed contracts repository"
+    },
+    "/users/{userId}/documents/{docId}/messages/{messageId}": {
+      "schema": "ChatMessage",
+      "description": "Grounded chat discussion messages per document"
+    }
+  }
+}
